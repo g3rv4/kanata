@@ -1,0 +1,58 @@
+(defcfg
+  process-unmapped-keys yes
+)
+(defsrc)
+
+(defvirtualkeys
+  ;; these are handled by keyboard maestro
+  copy-secondary (multi lctrl lalt lsft d)
+  cut-secondary (multi lctrl lalt lsft s)
+  paste-secondary (multi lctrl lalt lsft f)
+)
+(defseq
+  ;; tapping shift gets into this mode
+  copy-secondary (c)
+  cut-secondary (x)
+  paste-secondary (v)
+)
+
+(deflayermap (base-layer)
+  f1   lrld
+
+  ;; enter behaves as control when held
+  ret  (tap-hold 50 300 ret rctrl)
+
+  ;; tab behaves as control when held
+  tab  (tap-hold 50 300 tab lctrl)
+
+  ;; space behaves as hyper when held
+  spc  (tap-hold 50 300 spc (multi lsft lctrl lalt lmeta))
+
+  ;; shift, on tap, is the sequence leader. On hold, it enables the shift layer
+  ;; (while pressing shift)
+  rsft (tap-hold-press 50 200 sldr (multi rsft (layer-while-held shift-layer)))
+  lsft (tap-hold-press 50 200 sldr (multi lsft (layer-while-held shift-layer)))
+
+  ;; command goes to the meta layer (while pressing command)
+  lmet (multi lmet (layer-while-held meta-layer))
+  rmet (multi rmet (layer-while-held meta-layer))
+)
+
+(deflayermap (shift-layer)
+  ;; shift + backspace = del
+  bspc (unmod (lsft rsft) del)
+)
+
+(deflayermap (meta-layer)
+  ;; tmux shortcut: split vertical
+  i (macro (unmod lctrl b) (unmod lsft 5))
+
+  ;; tmux shortcut: split horizontal
+  p (macro (unmod lctrl b) (unmod lsft ') (unmod spc))
+
+  ;; tmux shortcuts: move around
+  o (macro (unmod lctrl b) (unmod up))
+  l (macro (unmod lctrl b) (unmod down))
+  k (macro (unmod lctrl b) (unmod left))
+  ; (macro (unmod lctrl b) (unmod right))
+)
