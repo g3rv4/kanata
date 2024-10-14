@@ -3,17 +3,13 @@
 )
 (defsrc)
 
-(defvirtualkeys
-  ;; these are handled by keyboard maestro
-  copy-secondary (multi lctrl lalt lsft d)
-  cut-secondary (multi lctrl lalt lsft s)
-  paste-secondary (multi lctrl lalt lsft f)
-)
-(defseq
-  ;; tapping shift gets into this mode
-  copy-secondary (c)
-  cut-secondary (x)
-  paste-secondary (v)
+(defalias
+  tmux-split-vertical (macro (unmod lctrl b) (unmod lsft 5))
+  tmux-split-horizontal (macro (unmod lctrl b) (unmod lsft ') (unmod spc))
+  tmux-move-up (macro (unmod lctrl b) (unmod up))
+  tmux-move-down (macro (unmod lctrl b) (unmod down))
+  tmux-move-left (macro (unmod lctrl b) (unmod left))
+  tmux-move-right (macro (unmod lctrl b) (unmod right))
 )
 
 (deflayermap (base-layer)
@@ -28,14 +24,13 @@
   ;; space behaves as hyper when held
   spc  (tap-hold 50 300 spc (multi lsft lctrl lalt lmeta))
 
-  ;; shift, on tap, is the sequence leader. On hold, it enables the shift layer
-  ;; (while pressing shift)
-  rsft (tap-hold-press 50 200 sldr (multi rsft (layer-while-held shift-layer)))
-  lsft (tap-hold-press 50 200 sldr (multi lsft (layer-while-held shift-layer)))
+  ;; have shift go to its layer
+  rsft (multi rsft (layer-while-held shift-layer))
+  lsft (multi lsft (layer-while-held shift-layer))
 
-  ;; command goes to the meta layer (while pressing command)
-  lmet (multi lmet (layer-while-held meta-layer))
-  rmet (multi rmet (layer-while-held meta-layer))
+  ;; have command go to its layer
+  lmet (multi lmet (layer-while-held lmeta-layer))
+  rmet (multi rmet (layer-while-held rmeta-layer))
 )
 
 (deflayermap (shift-layer)
@@ -43,16 +38,27 @@
   bspc (unmod (lsft rsft) del)
 )
 
-(deflayermap (meta-layer)
-  ;; tmux shortcut: split vertical
-  i (macro (unmod lctrl b) (unmod lsft 5))
+(deflayermap (lmeta-layer)
+  i @tmux-split-vertical
+  p @tmux-split-horizontal
+  o @tmux-move-up
+  l @tmux-move-down
+  k @tmux-move-left
+  ; @tmux-move-right
+)
 
-  ;; tmux shortcut: split horizontal
-  p (macro (unmod lctrl b) (unmod lsft ') (unmod spc))
+;; I want the right command to behave exactly as the left one except for
+;; copying and pasting. There I want to use the secondary clipboard.
+(deflayermap (rmeta-layer)
+  i @tmux-split-vertical
+  p @tmux-split-horizontal
+  o @tmux-move-up
+  l @tmux-move-down
+  k @tmux-move-left
+  ; @tmux-move-right
 
-  ;; tmux shortcuts: move around
-  o (macro (unmod lctrl b) (unmod up))
-  l (macro (unmod lctrl b) (unmod down))
-  k (macro (unmod lctrl b) (unmod left))
-  ; (macro (unmod lctrl b) (unmod right))
+  ;; secondary clipboard fun (managed by keyboard maestro)
+  c S-c
+  x S-x
+  v S-v
 )
