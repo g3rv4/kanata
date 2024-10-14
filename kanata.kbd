@@ -5,7 +5,7 @@
 
 (defalias
   tmux-split-vertical (macro (unmod lctrl b) (unmod lsft 5))
-  tmux-split-horizontal (macro (unmod lctrl b) (unmod lsft ') (unmod spc))
+  tmux-split-horizontal (macro (unmod lctrl b) 500 (unmod lsft ') 500 (unmod spc) 500)
   tmux-move-up (macro (unmod lctrl b) (unmod up))
   tmux-move-down (macro (unmod lctrl b) (unmod down))
   tmux-move-left (macro (unmod lctrl b) (unmod left))
@@ -15,30 +15,33 @@
 (deflayermap (base-layer)
   f1   lrld
 
+  lctl (multi lctl (layer-while-held control-layer))
+  rctl (multi rctl (layer-while-held control-layer))
+
   ;; enter behaves as control when held
-  ret  (tap-hold 50 300 ret rctrl)
+  ret  (tap-hold-press 50 300 ret (multi rctl (layer-while-held control-layer)))
 
   ;; tab behaves as control when held
-  tab  (tap-hold 50 300 tab lctrl)
+  tab  (tap-hold-press 50 300 tab (multi lctl (layer-while-held control-layer)))
 
   ;; space behaves as hyper when held
-  spc  (tap-hold 50 300 spc (multi lsft lctrl lalt lmeta))
+  spc  (tap-hold-press 50 300 spc (multi lsft lctrl lalt lmeta (layer-while-held spc-layer)))
 
-  ;; have shift go to its layer
   rsft (multi rsft (layer-while-held shift-layer))
   lsft (multi lsft (layer-while-held shift-layer))
 
-  ;; have command go to its layer
-  lmet (multi lmet (layer-while-held lmeta-layer))
   rmet (multi rmet (layer-while-held rmeta-layer))
 
-  ;; fix function keys
   fn (layer-while-held fn-layer)
 )
 
 (deflayermap (shift-layer)
   ;; shift + backspace = del
   bspc (unmod (lsft rsft) del)
+)
+
+(deflayermap (control-layer)
+  i (unmod lmet lalt i)
 )
 
 (deflayermap (fn-layer)
@@ -49,7 +52,7 @@
   f12 (unmod volu)
 )
 
-(deflayermap (lmeta-layer)
+(deflayermap (spc-layer)
   i @tmux-split-vertical
   p @tmux-split-horizontal
   o @tmux-move-up
@@ -58,16 +61,7 @@
   ; @tmux-move-right
 )
 
-;; I want the right command to behave exactly as the left one except for
-;; copying and pasting. There I want to use the secondary clipboard.
 (deflayermap (rmeta-layer)
-  i @tmux-split-vertical
-  p @tmux-split-horizontal
-  o @tmux-move-up
-  l @tmux-move-down
-  k @tmux-move-left
-  ; @tmux-move-right
-
   ;; secondary clipboard fun (managed by keyboard maestro)
   c A-c
   x A-x
