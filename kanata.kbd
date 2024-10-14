@@ -69,7 +69,7 @@
   ; @tmux-move-right
 
   ;; secondary clipboard fun (managed by keyboard maestro)
-  c S-c
-  x S-x
-  v S-v
+  c A-c
+  x A-x
+  v A-v
 )
