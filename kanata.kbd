@@ -31,11 +31,22 @@
   ;; have command go to its layer
   lmet (multi lmet (layer-while-held lmeta-layer))
   rmet (multi rmet (layer-while-held rmeta-layer))
+
+  ;; fix function keys
+  fn (layer-while-held fn-layer)
 )
 
 (deflayermap (shift-layer)
   ;; shift + backspace = del
   bspc (unmod (lsft rsft) del)
+)
+
+(deflayermap (fn-layer)
+  f1 (unmod brdwn)
+  f2 (unmod bru)
+  f10 (unmod mute)
+  f11 (unmod voldwn)
+  f12 (unmod volu)
 )
 
 (deflayermap (lmeta-layer)
