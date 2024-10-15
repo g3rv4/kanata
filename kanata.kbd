@@ -1,15 +1,16 @@
 (defcfg
   process-unmapped-keys yes
+  log-layer-changes no
 )
 (defsrc)
 
 (defalias
-  tmux-split-vertical (macro (unmod lctrl b) (unmod lsft 5))
-  tmux-split-horizontal (macro (unmod lctrl b) 500 (unmod lsft ') 500 (unmod spc) 500)
-  tmux-move-up (macro (unmod lctrl b) (unmod up))
-  tmux-move-down (macro (unmod lctrl b) (unmod down))
-  tmux-move-left (macro (unmod lctrl b) (unmod left))
-  tmux-move-right (macro (unmod lctrl b) (unmod right))
+  tmux-split-vertical (macro C-b S-5)
+  tmux-split-horizontal (macro C-b S-' spc)
+  tmux-move-up (macro C-b up)
+  tmux-move-down (macro C-b down)
+  tmux-move-left (macro C-b left)
+  tmux-move-right (macro C-b right)
 )
 
 (deflayermap (base-layer)
@@ -25,7 +26,7 @@
   tab  (tap-hold-press 50 300 tab (multi lctl (layer-while-held control-layer)))
 
   ;; space behaves as hyper when held
-  spc  (tap-hold-press 50 300 spc (multi lsft lctrl lalt lmeta (layer-while-held spc-layer)))
+  spc  (tap-hold-release 50 500 spc (layer-while-held spc-layer))
 
   rsft (multi rsft (layer-while-held shift-layer))
   lsft (multi lsft (layer-while-held shift-layer))
@@ -38,6 +39,8 @@
 (deflayermap (shift-layer)
   ;; shift + backspace = del
   bspc (unmod (lsft rsft) del)
+
+  ' (macro (unmod lsft ') (unmod spc))
 )
 
 (deflayermap (control-layer)
@@ -45,11 +48,11 @@
 )
 
 (deflayermap (fn-layer)
-  f1 (unmod brdwn)
-  f2 (unmod bru)
-  f10 (unmod mute)
-  f11 (unmod voldwn)
-  f12 (unmod volu)
+  f1 brdwn
+  f2 bru
+  f10 mute
+  f11 voldwn
+  f12 volu
 )
 
 (deflayermap (spc-layer)
@@ -59,6 +62,10 @@
   l @tmux-move-down
   k @tmux-move-left
   ; @tmux-move-right
+
+  a (multi lsft lctrl lalt lmeta a)
+  s (multi lsft lctrl lalt lmeta s)
+  d (multi lsft lctrl lalt lmeta d)
 )
 
 (deflayermap (rmeta-layer)
