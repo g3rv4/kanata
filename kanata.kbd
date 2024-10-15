@@ -7,6 +7,9 @@
 (defalias
   tmux-split-vertical (macro C-b S-5)
   tmux-split-horizontal (macro C-b S-' spc)
+  tmux-close-pane (macro C-b x 100 y ret)
+  tmux-zoom (macro C-b z)
+
   tmux-move-up (macro C-b up)
   tmux-move-down (macro C-b down)
   tmux-move-left (macro C-b left)
@@ -40,7 +43,7 @@
   ;; shift + backspace = del
   bspc (unmod (lsft rsft) del)
 
-  ' (macro (unmod lsft ') (unmod spc))
+  ' (macro ' (unmod spc))
 )
 
 (deflayermap (control-layer)
@@ -58,6 +61,8 @@
 (deflayermap (spc-layer)
   i @tmux-split-vertical
   p @tmux-split-horizontal
+  u @tmux-close-pane
+  j @tmux-zoom
   o @tmux-move-up
   l @tmux-move-down
   k @tmux-move-left
