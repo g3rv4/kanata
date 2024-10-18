@@ -28,13 +28,13 @@
   ;; tab behaves as control when held
   tab  (tap-hold-press 50 300 tab (multi lctl (layer-while-held control-layer)))
 
-  ;; space behaves as hyper when held
-  spc  (tap-hold-release 50 500 spc (layer-while-held spc-layer))
-
   rsft (multi rsft (layer-while-held shift-layer))
   lsft (multi lsft (layer-while-held shift-layer))
 
   rmet (multi rmet (layer-while-held rmeta-layer))
+
+  lalt (layer-while-held option-layer)
+  ralt (layer-while-held option-layer)
 
   fn (layer-while-held fn-layer)
 )
@@ -58,7 +58,7 @@
   f12 volu
 )
 
-(deflayermap (spc-layer)
+(deflayermap (option-layer)
   i @tmux-split-vertical
   p @tmux-split-horizontal
   u @tmux-close-pane
@@ -71,6 +71,8 @@
   a (multi lsft lctrl lalt lmeta a)
   s (multi lsft lctrl lalt lmeta s)
   d (multi lsft lctrl lalt lmeta d)
+
+  w (multi lsft lctrl lalt lmeta w)
 )
 
 (deflayermap (rmeta-layer)
