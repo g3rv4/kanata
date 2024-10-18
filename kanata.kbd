@@ -31,7 +31,8 @@
   rsft (multi rsft (layer-while-held shift-layer))
   lsft (multi lsft (layer-while-held shift-layer))
 
-  rmet (multi rmet (layer-while-held rmeta-layer))
+  lmet (tap-hold-press 50 300 (multi lsft lctrl lalt lmeta h) lmet)
+  rmet (tap-hold-press 50 300 (multi lsft lctrl lalt lmeta h) (multi rmet (layer-while-held rmeta-layer)))
 
   lalt (layer-while-held option-layer)
   ralt (layer-while-held option-layer)
