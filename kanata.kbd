@@ -49,6 +49,7 @@
 
 (deflayermap (control-layer)
   i (unmod lmet lalt i)
+  ret (unmod f12)
 )
 
 (deflayermap (fn-layer)
