@@ -23,7 +23,7 @@
   rctl (multi rctl (layer-while-held control-layer))
 
   ;; enter behaves as control when held
-  ret  (tap-hold-press 50 300 ret (multi rctl (layer-while-held control-layer)))
+  ret  (tap-hold 50 300 ret (multi rctl (layer-while-held control-layer)))
 
   ;; tab behaves as control when held
   tab  (tap-hold-press 50 300 tab (multi lctl (layer-while-held control-layer)))
