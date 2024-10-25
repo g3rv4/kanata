@@ -14,6 +14,8 @@
   tmux-move-down (macro C-b down)
   tmux-move-left (macro C-b left)
   tmux-move-right (macro C-b right)
+
+  meta-or-mute (tap-dance 200 (lmet (multi lsft lctrl lalt lmeta h)))
 )
 
 (deflayermap (base-layer)
@@ -31,8 +33,9 @@
   rsft (multi rsft (layer-while-held shift-layer))
   lsft (multi lsft (layer-while-held shift-layer))
 
-  lmet (tap-hold-press 50 300 (multi lsft lctrl lalt lmeta h) lmet)
-  rmet (tap-hold-press 50 300 (multi lsft lctrl lalt lmeta h) (multi rmet (layer-while-held rmeta-layer)))
+  lmet (tap-hold-press 50 300 @meta-or-mute lmet)
+  ;; right command uses the secondary clipboard
+  rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held rmeta-layer)))
 
   lalt (layer-while-held option-layer)
   ralt (layer-while-held option-layer)
