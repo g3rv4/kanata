@@ -33,7 +33,7 @@
   rsft (multi rsft (layer-while-held shift-layer))
   lsft (multi lsft (layer-while-held shift-layer))
 
-  lmet (tap-hold-press 50 300 @meta-or-mute lmet)
+  lmet (tap-hold-press 50 300 @meta-or-mute (multi lmet (layer-while-held lmeta-layer)))
   ;; right command uses the secondary clipboard
   rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held rmeta-layer)))
 
@@ -81,8 +81,13 @@
 )
 
 (deflayermap (rmeta-layer)
+  caps `
   ;; secondary clipboard fun (managed by keyboard maestro)
   c A-c
   x A-x
   v A-v
+)
+
+(deflayermap (lmeta-layer)
+  caps `
 )
