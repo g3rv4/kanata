@@ -37,8 +37,8 @@
   ;; right command uses the secondary clipboard
   rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held rmeta-layer)))
 
-  lalt (layer-while-held option-layer)
-  ralt (layer-while-held option-layer)
+  lalt (tap-dance 200 ((layer-while-held option-layer) lalt))
+  ralt (tap-dance 200 ((layer-while-held option-layer) ralt))
 
   fn (layer-while-held fn-layer)
 )
@@ -53,6 +53,7 @@
 (deflayermap (control-layer)
   i (unmod lmet lalt i)
   ret (unmod f12)
+  rsft (macro ((unmod g) (unmod e) (unmod r) (unmod v) (unmod a) (unmod s) (unmod .) (unmod i) (unmod o) (unmod /) (unmod z) (unmod o) (unmod o) (unmod m) (unmod ret)))
 )
 
 (deflayermap (fn-layer)
