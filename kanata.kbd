@@ -82,14 +82,18 @@
 )
 
 (deflayermap (rmeta-layer)
-  caps `
+  caps ret
+  lsft (tap-hold-release 50 300 f6 lsft)
+  rsft (tap-hold-release 50 300 f6 rsft)
 
   ;; secondary clipboard fun (managed by keyboard maestro)
-  c A-c
-  x A-x
-  v A-v
+;;  c A-c
+;;  x A-x
+;;  v A-v
 )
 
 (deflayermap (lmeta-layer)
-  caps `
+  caps ret
+  lsft (tap-hold-release 50 300 f6 lsft)
+  rsft (tap-hold-release 50 300 f6 rsft)
 )
