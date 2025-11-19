@@ -84,9 +84,6 @@
 (deflayermap (rmeta-layer)
   caps `
 
-  ret (multi rctl rsft ;)
-  rsft (multi rctl rsft .)
-
   ;; secondary clipboard fun (managed by keyboard maestro)
   c A-c
   x A-x
