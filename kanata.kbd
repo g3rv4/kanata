@@ -43,8 +43,8 @@
   rsft (t! layer-if-base rsft (multi rsft (layer-while-held shift-layer)))
   lsft (t! layer-if-base lsft (multi lsft (layer-while-held shift-layer)))
 
-  lmet (t! layer-if-base lmet (tap-hold-press 50 300 @meta-or-mute (multi lmet (layer-while-held lmeta-layer))))
-  rmet (t! layer-if-base rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held rmeta-layer))))
+  lmet (t! layer-if-base lmet (tap-hold-press 50 300 @meta-or-mute (multi lmet (layer-while-held meta-layer))))
+  rmet (t! layer-if-base rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held meta-layer))))
 
   lalt (t! layer-if-base lalt (multi lalt (layer-while-held option-layer)))
   ralt (t! layer-if-base ralt (multi ralt (layer-while-held option-layer)))
@@ -88,12 +88,9 @@
   ; @tmux-move-right
 )
 
-(deflayermap (rmeta-layer)
+(deflayermap (meta-layer)
   caps ret
+  lsft f6
   rsft f6
 )
 
-(deflayermap (lmeta-layer)
-  caps ret
-  lsft f6
-)
