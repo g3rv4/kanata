@@ -4,6 +4,13 @@
 )
 (defsrc)
 
+(deftemplate layer-if-base (key action)
+  (switch
+    ((layer base-layer)) $action break
+    () $key break
+  )
+)
+
 (defalias
   tmux-split-vertical (macro C-b S-5)
   tmux-split-horizontal (macro C-b S-' spc)
@@ -21,26 +28,28 @@
 (deflayermap (base-layer)
   f1   lrld
 
-  lctl (multi lctl (layer-while-held control-layer))
-  rctl (multi rctl (layer-while-held control-layer))
+  ;; by default, kanata activates the layer when you press a key, regardless of what layer you're on
+  ;; with this switch trick, I'm making it so that it only enters a layer if it's on the base layer
+
+  lctl (t! layer-if-base lctl (multi lctl (layer-while-held control-layer)))
+  rctl (t! layer-if-base rctl (multi rctl (layer-while-held control-layer)))
 
   ;; enter behaves as control when held
-  ret  (tap-hold 50 300 ret (multi rctl (layer-while-held control-layer)))
+  ret (t! layer-if-base ret (tap-hold 50 300 ret (multi rctl (layer-while-held control-layer))))
 
   ;; tab behaves as control when held
-  tab  (tap-hold-press 50 300 tab (multi lctl (layer-while-held control-layer)))
+  tab (t! layer-if-base tab (tap-hold-press 50 300 tab (multi lctl (layer-while-held control-layer))))
 
-  rsft (multi rsft (layer-while-held shift-layer))
-  lsft (multi lsft (layer-while-held shift-layer))
+  rsft (t! layer-if-base rsft (multi rsft (layer-while-held shift-layer)))
+  lsft (t! layer-if-base lsft (multi lsft (layer-while-held shift-layer)))
 
-  lmet (tap-hold-press 50 300 @meta-or-mute (multi lmet (layer-while-held lmeta-layer)))
-  ;; right command uses the secondary clipboard
-  rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held rmeta-layer)))
+  lmet (t! layer-if-base lmet (tap-hold-press 50 300 @meta-or-mute (multi lmet (layer-while-held lmeta-layer))))
+  rmet (t! layer-if-base rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held rmeta-layer))))
 
-  lalt (tap-dance 200 ((layer-while-held option-layer) lalt))
-  ralt (tap-dance 200 ((layer-while-held option-layer) ralt))
+  lalt (t! layer-if-base lalt (multi lalt (layer-while-held option-layer)))
+  ralt (t! layer-if-base ralt (multi ralt (layer-while-held option-layer)))
 
-  fn (layer-while-held fn-layer)
+  fn (t! layer-if-base fn (layer-while-held fn-layer))
 )
 
 (deflayermap (shift-layer)
@@ -62,6 +71,10 @@
   f10 mute
   f11 voldwn
   f12 volu
+
+  j (multi lctrl lalt lmeta j)
+  k (multi lctrl lalt lmeta k)
+  l (multi lctrl lalt lmeta l)
 )
 
 (deflayermap (option-layer)
@@ -73,27 +86,14 @@
   l @tmux-move-down
   k @tmux-move-left
   ; @tmux-move-right
-
-  a (multi lsft lctrl lalt lmeta a)
-  s (multi lsft lctrl lalt lmeta s)
-  d (multi lsft lctrl lalt lmeta d)
-
-  w (multi lsft lctrl lalt lmeta w)
 )
 
 (deflayermap (rmeta-layer)
   caps ret
-  lsft (tap-hold-release 50 300 f6 lsft)
-  rsft (tap-hold-release 50 300 f6 rsft)
-
-  ;; secondary clipboard fun (managed by keyboard maestro)
-;;  c A-c
-;;  x A-x
-;;  v A-v
+  rsft f6
 )
 
 (deflayermap (lmeta-layer)
   caps ret
-  lsft (tap-hold-release 50 300 f6 lsft)
-  rsft (tap-hold-release 50 300 f6 rsft)
+  lsft f6
 )
