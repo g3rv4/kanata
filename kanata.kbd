@@ -49,7 +49,10 @@
   lalt (t! layer-if-base lalt (multi lalt (layer-while-held option-layer)))
   ralt (t! layer-if-base ralt (multi ralt (layer-while-held option-layer)))
 
-  fn (t! layer-if-base fn (layer-while-held fn-layer))
+  f24 (multi lalt lsft lctl (layer-while-held fn-layer))
+  fn (multi lalt lsft lctl (layer-while-held fn-layer))
+
+  caps (t! layer-if-base caps (multi rmet ralt rctl (layer-while-held caps-layer)))
 )
 
 (deflayermap (shift-layer)
@@ -66,15 +69,11 @@
 )
 
 (deflayermap (fn-layer)
-  f1 brdwn
-  f2 bru
-  f10 mute
-  f11 voldwn
-  f12 volu
-
-  j (multi lctrl lalt lmeta j)
-  k (multi lctrl lalt lmeta k)
-  l (multi lctrl lalt lmeta l)
+  f1 (unmod brdwn)
+  f2 (unmod bru)
+  f10 (unmod mute)
+  f11 (unmod voldwn)
+  f12 (unmod volu)
 )
 
 (deflayermap (option-layer)
@@ -94,3 +93,5 @@
   rsft f6
 )
 
+(deflayermap (caps-layer)
+)
