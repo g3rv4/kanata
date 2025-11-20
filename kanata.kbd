@@ -46,8 +46,8 @@
   lmet (t! layer-if-base lmet (tap-hold-press 50 300 @meta-or-mute (multi lmet (layer-while-held meta-layer))))
   rmet (t! layer-if-base rmet (tap-hold-press 50 300 @meta-or-mute (multi rmet (layer-while-held meta-layer))))
 
-  lalt (t! layer-if-base lalt (multi lalt (layer-while-held option-layer)))
-  ralt (t! layer-if-base ralt (multi ralt (layer-while-held option-layer)))
+  lalt (t! layer-if-base lalt (tap-dance 200 ((layer-while-held option-layer) lalt)))
+  ralt (t! layer-if-base ralt (tap-dance 200 ((layer-while-held option-layer) ralt)))
 
   f24 (multi lalt lsft lctl (layer-while-held fn-layer))
   fn (multi lalt lsft lctl (layer-while-held fn-layer))
