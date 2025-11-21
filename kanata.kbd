@@ -22,7 +22,7 @@
   tmux-move-left (macro C-b left)
   tmux-move-right (macro C-b right)
 
-  meta-or-mute (tap-dance 200 (lmet (multi lsft lctrl lalt lmeta h)))
+  meta-or-mute (tap-dance 200 (lmet (multi rsft rctrl ralt rmeta h)))
 )
 
 (deflayermap (base-layer)
@@ -89,8 +89,8 @@
 
 (deflayermap (meta-layer)
   caps ret
-  lsft f6
-  rsft f6
+  lsft (tap-hold 50 300 f6 lsft)
+  rsft (tap-hold 50 300 f6 rsft)
 )
 
 (deflayermap (caps-layer)
